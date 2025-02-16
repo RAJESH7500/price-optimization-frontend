@@ -53,6 +53,19 @@ The page will reload if you make edits.
 Open the project folder and Navigate to `/src/components/`. <br/>
 You will find all the components used and you can edit your information accordingly.
 
+# Project live link
+Open [https://price-optimization-frontend.onrender.com/manage-product](https://price-optimization-frontend.onrender.com/manage-product) to view it in browser
+
+# Help
+if chrome browser give the cors error, try to open the crome by disabling chrome cors with command
+## OSX
+open -n -a /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --args --user-data-dir="/tmp/chrome_dev_test" --disable-web-security
+## Linux
+google-chrome --disable-web-security
+
+## Windows
+chrome.exe --user-data-dir="C://Chrome dev session" --disable-web-security
+
 # Website view
 <div align="center">
   <h1>Register page</h1>
