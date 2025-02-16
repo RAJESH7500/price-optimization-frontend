@@ -34,6 +34,7 @@ const ResiterForm = () => {
       const response = await axios.post(url, JSON.stringify(formData), config);
       setLoading(false);
       localStorage.setItem('token', response.data.access_token);
+      localStorage.setItem('user_id', response.data.user_id);
       navigate('/dashboard');
     } catch (eror) {
       console.log('error is ', eror);

@@ -5,9 +5,9 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
-import { X } from "lucide-react";
-import { FORECAST_HEADERS } from "../constant";
+} from 'recharts';
+import { X } from 'lucide-react';
+import { FORECAST_HEADERS } from '../constant';
 
 export default function DemandForecastModal({
   isOpen,
@@ -15,8 +15,8 @@ export default function DemandForecastModal({
   data,
   selectedProducts,
 }) {
-  const demandData = data.filter((item) => selectedProducts.includes(item.id));
-  const chartData = demandData.map((item) => {
+  const demandData = data?.filter((item) => selectedProducts.includes(item.id));
+  const chartData = demandData?.map((item) => {
     return {
       name: item?.name,
       demand: Number(item?.demand_forecast),
@@ -41,7 +41,7 @@ export default function DemandForecastModal({
               <XAxis dataKey="name" stroke="#ccc" />
               <YAxis stroke="#ccc" />
               <Tooltip
-                contentStyle={{ backgroundColor: "#333", border: "none" }}
+                contentStyle={{ backgroundColor: '#333', border: 'none' }}
               />
               <Line
                 type="monotone"
@@ -67,7 +67,7 @@ export default function DemandForecastModal({
           <table className="w-full text-left border border-gray-700">
             <thead className="bg-gray-800 sticky top-0">
               <tr>
-                {FORECAST_HEADERS.map((header) => (
+                {FORECAST_HEADERS?.map((header) => (
                   <th
                     key={header.value}
                     className="px-4 py-2 border border-gray-700"
@@ -78,13 +78,13 @@ export default function DemandForecastModal({
               </tr>
             </thead>
             <tbody>
-              {demandData.map((product, index) => (
+              {demandData?.map((product, index) => (
                 <tr key={index} className="border border-gray-700">
-                  {FORECAST_HEADERS.map((header, i) => (
+                  {FORECAST_HEADERS?.map((header, i) => (
                     <td
                       key={i}
                       className={`px-4 py-2 border border-gray-700 ${
-                        i === 6 ? "bg-cyan-700 text-white font-bold" : ""
+                        i === 6 ? 'bg-cyan-700 text-white font-bold' : ''
                       }`}
                     >
                       {product[header.value]}

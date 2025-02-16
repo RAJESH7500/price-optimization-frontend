@@ -1,4 +1,5 @@
-export const BASE_URL = 'http://127.0.0.1:5001';
+export const BASE_URL =
+  process.env.BASE_URL || 'https://price-optimization-backend.onrender.com';
 export const FORECAST_HEADERS = [
   { name: 'Product Name', value: 'name' },
   { name: 'Product Category', value: 'category' },

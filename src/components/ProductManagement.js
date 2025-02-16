@@ -47,20 +47,23 @@ const ProductManagement = () => {
         method: 'get',
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
         },
       });
       setData(response.data);
       setLoading(false);
     } catch (error) {
       const errorMessage = JSON.parse(error?.request?.response || '').error;
-      if (errorMessage === 'token_expired') {
+      if (
+        errorMessage === 'token_expired' ||
+        errorMessage === 'invalid_token'
+      ) {
         localStorage.removeItem('token');
         localStorage.removeItem('user_id');
       }
       setLoading(false);
     }
   };
+
   return (
     <div className="min-h-screen bg-zinc-900">
       {loading ? <Loader /> : null}
