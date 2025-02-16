@@ -1,5 +1,7 @@
 import React from 'react';
 import { Eye, Pencil, Trash2 } from 'lucide-react';
+import { BASE_URL } from '../constant';
+import axios from 'axios';
 
 const Table = ({
   data,
@@ -7,11 +9,36 @@ const Table = ({
   setSelectedProducts,
   setSelectedProductData,
   setIsOpen,
+  fetchData,
 }) => {
   const handleCheckBoxClick = (id) => {
     if (selectedProducts?.includes(id)) {
       setSelectedProducts(selectedProducts?.filter((item) => item !== id));
     } else setSelectedProducts([...selectedProducts, id]);
+  };
+
+  const handleProductDelete = async (product_id) => {
+    const url = `${BASE_URL}/api/products/${product_id}`;
+    const token = localStorage.getItem('token');
+    try {
+      await axios({
+        url: url,
+        method: 'delete',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchData();
+    } catch (error) {
+      const errorMessage = JSON.parse(error?.request?.response || '').error;
+      if (
+        errorMessage === 'token_expired' ||
+        errorMessage === 'invalid_token'
+      ) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
+      }
+    }
   };
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -100,7 +127,10 @@ const Table = ({
                   >
                     <Pencil size={16} />
                   </button>
-                  <button className="text-gray-400">
+                  <button
+                    className="text-gray-400"
+                    onClick={() => handleProductDelete(item.id)}
+                  >
                     <Trash2 size={16} />
                   </button>
                 </div>

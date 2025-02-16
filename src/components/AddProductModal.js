@@ -7,7 +7,9 @@ const AddProductModal = ({
   isOpen,
   onClose,
   selectedProductData,
+  setSelectedProductData,
   isUpdate = false,
+  fetchData,
 }) => {
   const [product, setProduct] = useState(selectedProductData);
   useEffect(() => {
@@ -30,7 +32,7 @@ const AddProductModal = ({
     try {
       await axios({
         url: url,
-        method: isUpdate ? 'PUT' : 'POST"',
+        method: isUpdate ? 'put' : 'post',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -38,6 +40,16 @@ const AddProductModal = ({
         data: JSON.stringify(product),
       });
       onClose(false);
+      setSelectedProductData({
+        name: '',
+        description: '',
+        cost_price: 0,
+        selling_price: 0,
+        category: '',
+        stock_available: 0,
+        units_sold: 0,
+      });
+      fetchData();
     } catch (error) {
       console.log('error occured ', error);
     }
@@ -100,6 +112,7 @@ const AddProductModal = ({
                 type="number"
                 name="selling_price"
                 value={product.selling_price}
+                onChange={handleOnChange}
                 placeholder="XX,XXX,XXX"
                 className="w-full bg-zinc-800 text-white p-3 rounded-md placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-400"
               />

@@ -42,6 +42,7 @@ const ProductManagement = () => {
     const token = localStorage.getItem('token');
     try {
       setLoading(true);
+
       const response = await axios({
         url: url,
         method: 'get',
@@ -52,7 +53,9 @@ const ProductManagement = () => {
       setData(response.data);
       setLoading(false);
     } catch (error) {
-      const errorMessage = JSON.parse(error?.request?.response || '').error;
+      const errorMessage = error?.request?.response
+        ? JSON.parse(error?.request?.response).error
+        : '';
       if (
         errorMessage === 'token_expired' ||
         errorMessage === 'invalid_token'
@@ -86,6 +89,7 @@ const ProductManagement = () => {
             setSelectedProducts={setSelectedProducts}
             setIsOpen={setIsOpen}
             setSelectedProductData={setSelectedProductData}
+            fetchData={fetchData}
           />
         </div>
       </div>
@@ -94,6 +98,8 @@ const ProductManagement = () => {
         onClose={setIsOpen}
         selectedProductData={selectedProductData}
         isUpdate={!selectedProductData.name ? false : true}
+        fetchData={fetchData}
+        setSelectedProductData={setSelectedProductData}
       />
       <DemandForecastModal
         isOpen={isDemandForecast}
