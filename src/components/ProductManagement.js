@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Header from "./Header";
-import Table from "./Table";
-import Toolbar from "./Toolbar";
-import { BASE_URL } from "../constant";
-import axios from "axios";
-import AddProductModal from "./AddProductModal";
-import DemandForecastModal from "./DemandForecastModal";
-import Loader from "./Loader";
+import React, { useEffect, useState } from 'react';
+import Header from './Header';
+import Table from './Table';
+import Toolbar from './Toolbar';
+import { BASE_URL } from '../constant';
+import axios from 'axios';
+import AddProductModal from './AddProductModal';
+import DemandForecastModal from './DemandForecastModal';
+import Loader from './Loader';
 
 const ProductManagement = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [category, setCategory] = useState("All");
-  const [searchText, setSearchtext] = useState("");
+  const [category, setCategory] = useState('All');
+  const [searchText, setSearchtext] = useState('');
   const [selectedFilter, setSelectedFilter] = useState({
     isOpen: false,
     value: null,
@@ -22,11 +22,11 @@ const ProductManagement = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [isDemandForecast, setIsDemandForecast] = useState(false);
   const [selectedProductData, setSelectedProductData] = useState({
-    name: " ",
-    description: " ",
+    name: '',
+    description: '',
     cost_price: 0,
     selling_price: 0,
-    category: "",
+    category: '',
     stock_available: 0,
     units_sold: 0,
   });
@@ -37,23 +37,27 @@ const ProductManagement = () => {
 
   const fetchData = async () => {
     const url = `${BASE_URL}/api/products?category=${category}${
-      !searchText ? "" : "&name=" + searchText
-    }${selectedFilter.value ? "&order_by=" + selectedFilter.value : ""}`;
-    const token = localStorage.getItem("token");
+      !searchText ? '' : '&name=' + searchText
+    }${selectedFilter.value ? '&order_by=' + selectedFilter.value : ''}`;
+    const token = localStorage.getItem('token');
     try {
       setLoading(true);
       const response = await axios({
         url: url,
-        method: "get",
+        method: 'get',
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       });
       setData(response.data);
       setLoading(false);
     } catch (error) {
-      console.log("error occured ", error);
+      const errorMessage = JSON.parse(error?.request?.response || '').error;
+      if (errorMessage === 'token_expired') {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user_id');
+      }
       setLoading(false);
     }
   };

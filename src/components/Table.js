@@ -1,5 +1,5 @@
-import React from "react";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import React from 'react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
 
 const Table = ({
   data,
@@ -60,7 +60,7 @@ const Table = ({
         <tbody>
           {data.map((item, index) => (
             <tr
-              className={index % 2 === 0 ? "bg-white bg-gray-300" : "bg-white"}
+              className={index % 2 === 0 ? 'bg-white bg-gray-300' : 'bg-white'}
             >
               <td className="w-4 p-4">
                 <div className="flex items-center">
@@ -88,11 +88,11 @@ const Table = ({
               <td className="px-6 py-4">{item.units_sold}</td>
               <td className="flex items-center px-6 py-4">
                 <div className="flex items-center space-x-4">
-                  <button className="text-gray-400 hover:text-white">
+                  <button className="text-gray-400">
                     <Eye size={16} />
                   </button>
                   <button
-                    className="text-gray-400 hover:text-white"
+                    className="text-gray-400"
                     onClick={() => {
                       setSelectedProductData(item);
                       setIsOpen(true);
@@ -100,7 +100,7 @@ const Table = ({
                   >
                     <Pencil size={16} />
                   </button>
-                  <button className="text-gray-400 hover:text-white">
+                  <button className="text-gray-400">
                     <Trash2 size={16} />
                   </button>
                 </div>

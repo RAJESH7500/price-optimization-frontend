@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { X } from "lucide-react";
-import { BASE_URL } from "../constant";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { X } from 'lucide-react';
+import { BASE_URL } from '../constant';
+import axios from 'axios';
 
 const AddProductModal = ({
   isOpen,
@@ -10,7 +10,6 @@ const AddProductModal = ({
   isUpdate = false,
 }) => {
   const [product, setProduct] = useState(selectedProductData);
-  console.log("product data is ", product);
   useEffect(() => {
     if (isUpdate) {
       setProduct(selectedProductData);
@@ -26,32 +25,32 @@ const AddProductModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `${BASE_URL}/api/products${isUpdate ? "/" + product.id : ""}`;
-    const token = localStorage.getItem("token");
+    const url = `${BASE_URL}/api/products${isUpdate ? '/' + product.id : ''}`;
+    const token = localStorage.getItem('token');
     try {
       await axios({
         url: url,
-        method: isUpdate ? "PUT" : 'POST"',
+        method: isUpdate ? 'PUT' : 'POST"',
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         data: JSON.stringify(product),
       });
       onClose(false);
     } catch (error) {
-      console.log("error occured ", error);
-      console.log(product);
+      console.log('error occured ', error);
     }
   };
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 z-9999 bg-black/50 flex items-center justify-center">
       <div className="bg-zinc-900 rounded-lg w-[600px] p-6 relative">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-emerald-400 text-xl font-medium">
-            Add New Products
+            {isUpdate
+              ? `Edit ${selectedProductData?.name}`
+              : 'Add New Products'}
           </h2>
           <button
             onClick={() => onClose(false)}
@@ -154,7 +153,7 @@ const AddProductModal = ({
               type="submit"
               className="px-6 py-2 rounded-md bg-emerald-400 text-black hover:bg-emerald-500"
             >
-              {isUpdate ? "Update" : "Add"}
+              {isUpdate ? 'Update' : 'Add'}
             </button>
           </div>
         </form>
